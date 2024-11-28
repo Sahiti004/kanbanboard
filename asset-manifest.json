@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/kanbanboard/static/css/main.447cc8eb.css",
+    "main.js": "/kanbanboard/static/js/main.c93bc025.js",
+    "static/js/453.325bd600.chunk.js": "/kanbanboard/static/js/453.325bd600.chunk.js",
+    "static/media/NoPriority.svg": "/kanbanboard/static/media/NoPriority.7218b139313728c6a4efa8da6e34852b.svg",
+    "index.html": "/kanbanboard/index.html",
+    "static/media/LowPriority.svg": "/kanbanboard/static/media/LowPriority.491e21f9000cb90112dea470dbb72650.svg",
+    "static/media/MediumPriority.svg": "/kanbanboard/static/media/MediumPriority.83775665307e977d62e9b0fc7fb95cc4.svg",
+    "static/media/HighPriority.svg": "/kanbanboard/static/media/HighPriority.5024fd0d163cb13c95f2d29079e2974d.svg",
+    "static/media/UrgentPriorityColour.svg": "/kanbanboard/static/media/UrgentPriorityColour.9b67f75d5459d4d66573ef9f8e6f6841.svg",
+    "main.447cc8eb.css.map": "/kanbanboard/static/css/main.447cc8eb.css.map",
+    "main.c93bc025.js.map": "/kanbanboard/static/js/main.c93bc025.js.map",
+    "453.325bd600.chunk.js.map": "/kanbanboard/static/js/453.325bd600.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.447cc8eb.css",
+    "static/js/main.c93bc025.js"
+  ]
+}
