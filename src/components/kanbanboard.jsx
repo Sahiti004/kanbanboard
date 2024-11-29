@@ -10,6 +10,7 @@ const KanbanBoard = () => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [users, setUsers] = useState([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
