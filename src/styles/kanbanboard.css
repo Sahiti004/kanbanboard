@@ -1,17 +1,64 @@
 .kanban-container {
     padding: 20px;
-    background-color: #f4f7fa; 
+    background-color: #f4f7fa;
   }
   
   .kanban-controls {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 20px;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-button {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 200px;
+    padding: 10px;
+  }
+  
+  .dropdown-menu div {
+    margin-bottom: 10px;
+  }
+  
+  .dropdown-menu span {
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .dropdown-menu select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
   }
   
   .kanban-board {
     display: flex;
-    gap: 20px;
+  justify-content: space-between;  /* Adjusts how columns are spaced out */
+  flex-wrap: wrap; /* Allows the columns to wrap if necessary */
+  gap: 16px; /* Adjusts the gap between the columns */
+  overflow-x: hidden;  /* Prevents horizontal scrolling */
+  width: 100%;
   }
   
   .kanban-column {

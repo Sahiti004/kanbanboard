@@ -5,8 +5,9 @@ import { API_URL } from "../api";
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
-  const [grouping, setGrouping] = useState("status");
+  const [grouping, setGrouping] = useState("status"); // 'status' or 'priority' grouping
   const [sortOption, setSortOption] = useState("priority");
+  const [displayMenu, setDisplayMenu] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,23 +57,51 @@ const KanbanBoard = () => {
 
   const groupedTickets = sortTickets(groupTickets());
 
+  const handleDisplayChange = (type, value) => {
+    if (type === "grouping") setGrouping(value);
+    else if (type === "sorting") setSortOption(value);
+    setDisplayMenu(false);
+  };
+
   return (
     <div className="kanban-container">
       <div className="kanban-controls">
-        <div>
-          <label>Group By: </label>
-          <select onChange={(e) => setGrouping(e.target.value)} value={grouping}>
-            <option value="status">Status</option>
-            <option value="user">User</option>
-            <option value="priority">Priority</option>
-          </select>
-        </div>
-        <div>
-          <label>Sort By: </label>
-          <select onChange={(e) => setSortOption(e.target.value)} value={sortOption}>
-            <option value="priority">Priority</option>
-            <option value="title">Title</option>
-          </select>
+        <div className="dropdown">
+          <button
+            className="dropdown-button"
+            onClick={() => setDisplayMenu(!displayMenu)}
+          >
+            Display
+          </button>
+          {displayMenu && (
+            <div className="dropdown-menu">
+              <div>
+                <span>Grouping</span>
+                <select
+                  onChange={(e) =>
+                    handleDisplayChange("grouping", e.target.value)
+                  }
+                  value={grouping}
+                >
+                  <option value="status">Status</option>
+                  <option value="user">User</option>
+                  <option value="priority">Priority</option>
+                </select>
+              </div>
+              <div>
+                <span>Ordering</span>
+                <select
+                  onChange={(e) =>
+                    handleDisplayChange("sorting", e.target.value)
+                  }
+                  value={sortOption}
+                >
+                  <option value="priority">Priority</option>
+                  <option value="title">Title</option>
+                </select>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="kanban-board">
@@ -80,7 +109,7 @@ const KanbanBoard = () => {
           <div key={group} className="kanban-column">
             <h3>{group}</h3>
             {tickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} />
+              <TicketCard key={ticket.id} ticket={ticket} grouping={grouping} />
             ))}
           </div>
         ))}
