@@ -60,6 +60,7 @@ const TicketCard = ({ ticket, grouping }) => {
           {ticket.title}
         </h4>
 
+        {/* Show priority icon below the title when grouping by status */}
         {grouping === "status" && (
           <div className="priority-section" >
             <img
