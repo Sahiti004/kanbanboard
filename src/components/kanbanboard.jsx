@@ -5,11 +5,10 @@ import { API_URL } from "../api";
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
-  const [grouping, setGrouping] = useState("status"); // 'status' or 'priority' grouping
+  const [grouping, setGrouping] = useState("status");
   const [sortOption, setSortOption] = useState("priority");
   const [displayMenu, setDisplayMenu] = useState(false);
   const [users, setUsers] = useState([]);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +16,7 @@ const KanbanBoard = () => {
         const response = await fetch(API_URL);
         const data = await response.json();
         setTickets(data.tickets);
-        setUsers(data.users); // Store users data
+        setUsers(data.users);
       } catch (error) {
         console.error("Error fetching tickets:", error);
       }
@@ -25,7 +24,6 @@ const KanbanBoard = () => {
     fetchData();
   }, []);
 
-  // Create a lookup object for userId to user name
   const userLookup = users.reduce((acc, user) => {
     acc[user.id] = user.name;
     return acc;
@@ -36,7 +34,7 @@ const KanbanBoard = () => {
       case "status":
         return groupBy("status");
       case "user":
-        return groupBy("userId"); // Use 'userId' for grouping tickets by user
+        return groupBy("userId");
       case "priority":
         return groupBy("priority");
       default:
@@ -70,6 +68,14 @@ const KanbanBoard = () => {
     if (type === "grouping") setGrouping(value);
     else if (type === "sorting") setSortOption(value);
     setDisplayMenu(false);
+  };
+
+  const priorityLabels = {
+    4: { label: "Urgent", icon: require("../assets/UrgentPriorityColour.svg") },
+    3: { label: "High Priority", icon: require("../assets/HighPriority.svg") },
+    2: { label: "Medium Priority", icon: require("../assets/MediumPriority.svg") },
+    1: { label: "Low Priority", icon: require("../assets/LowPriority.svg") },
+    0: { label: "No Priority", icon: require("../assets/NoPriority.svg") },
   };
 
   return (
@@ -114,15 +120,36 @@ const KanbanBoard = () => {
         </div>
       </div>
       <div className="kanban-board">
-        {groupedTickets.map(({ group, tickets }) => (
-          <div key={group} className="kanban-column">
-            {/* Display the user's name instead of userId */}
-            <h3>{grouping === "user" ? userLookup[group] : group}</h3>
-            {tickets.map((ticket) => (
-              <TicketCard key={ticket.id} ticket={ticket} grouping={grouping} />
-            ))}
-          </div>
-        ))}
+        {groupedTickets.map(({ group, tickets }) => {
+          const priorityLabel = priorityLabels[group];
+          return (
+            <div key={group} className="kanban-column">
+              {grouping === "priority" && priorityLabel ? (
+                <div
+                  className="priority-header"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {/* <img
+                    // src={priorityLabel.icon}
+                    alt={priorityLabel.label}
+                    className="priority-icon-header"
+                    style={{ marginRight: "5px" }}
+                  /> */}
+                  <h3>{priorityLabel.label}</h3>
+                </div>
+              ) : (
+                <h3>{grouping === "user" ? userLookup[group] : group}</h3>
+              )}
+              {tickets.map((ticket) => (
+                <TicketCard key={ticket.id} ticket={ticket} grouping={grouping} />
+              ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

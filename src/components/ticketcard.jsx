@@ -1,13 +1,11 @@
 import React from "react";
 import "../styles/ticketcard.css";
 
-// Import images for status
 import toDoImg from "../assets/ToDo.svg";
 import inProgressImg from "../assets/InProgress.svg";
 import doneImg from "../assets/Done.svg";
 import backlogImg from "../assets/Backlog.svg";
 
-// Import images for priority
 import highPriorityImg from "../assets/HighPriority.svg";
 import lowPriorityImg from "../assets/LowPriority.svg";
 import mediumPriorityImg from "../assets/MediumPriority.svg";
@@ -15,7 +13,6 @@ import noPriorityImg from "../assets/NoPriority.svg";
 import urgentPriorityColor from "../assets/UrgentPriorityColour.svg";
 
 const TicketCard = ({ ticket, grouping }) => {
-  // Priority images map
   const priorityImages = {
     4: urgentPriorityColor,
     3: highPriorityImg,
@@ -24,7 +21,6 @@ const TicketCard = ({ ticket, grouping }) => {
     0: noPriorityImg,
   };
 
-  // Status images map
   const statusImages = {
     "Todo": toDoImg,
     "In progress": inProgressImg,
@@ -43,16 +39,14 @@ const TicketCard = ({ ticket, grouping }) => {
         />
       </div>
 
-      {/* Conditional rendering based on grouping */}
       <div
         style={{
           display: "inline-flex",
-          flexDirection: grouping === "status" || grouping === "user" ? "column" : "row", // Column for status and user, row for priority
+          flexDirection: grouping === "status" ? "column" : "row",
           alignItems: "center",
         }}
       >
-        {/* Show status icon to the left when grouping by priority or user */}
-        {(grouping === "priority" || grouping === "user") && (
+        {(grouping === "user" || grouping === "priority") && (
           <div className="status-section" style={{ marginRight: "10px" }}>
             <img
               src={statusImages[ticket.status] || toDoImg}
@@ -62,12 +56,10 @@ const TicketCard = ({ ticket, grouping }) => {
           </div>
         )}
 
-        {/* Title with reduced font size */}
         <h4 className="ticket-title" style={{ fontSize: "18px", margin: "0" }}>
           {ticket.title}
         </h4>
 
-        {/* Show priority icon below the title when grouping by status or user */}
         {(grouping === "status" || grouping === "user") && (
           <div className="priority-section" style={{ marginTop: "10px" }}>
             <img
