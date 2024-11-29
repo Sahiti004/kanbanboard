@@ -8,6 +8,7 @@ const KanbanBoard = () => {
   const [grouping, setGrouping] = useState("status"); // 'status' or 'priority' grouping
   const [sortOption, setSortOption] = useState("priority");
   const [displayMenu, setDisplayMenu] = useState(false);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,6 +16,7 @@ const KanbanBoard = () => {
         const response = await fetch(API_URL);
         const data = await response.json();
         setTickets(data.tickets);
+        setUsers(data.users); // Store users data
       } catch (error) {
         console.error("Error fetching tickets:", error);
       }
@@ -22,12 +24,18 @@ const KanbanBoard = () => {
     fetchData();
   }, []);
 
+  // Create a lookup object for userId to user name
+  const userLookup = users.reduce((acc, user) => {
+    acc[user.id] = user.name;
+    return acc;
+  }, {});
+
   const groupTickets = () => {
     switch (grouping) {
       case "status":
         return groupBy("status");
       case "user":
-        return groupBy("assignee");
+        return groupBy("userId"); // Use 'userId' for grouping tickets by user
       case "priority":
         return groupBy("priority");
       default:
@@ -107,7 +115,8 @@ const KanbanBoard = () => {
       <div className="kanban-board">
         {groupedTickets.map(({ group, tickets }) => (
           <div key={group} className="kanban-column">
-            <h3>{group}</h3>
+            {/* Display the user's name instead of userId */}
+            <h3>{grouping === "user" ? userLookup[group] : group}</h3>
             {tickets.map((ticket) => (
               <TicketCard key={ticket.id} ticket={ticket} grouping={grouping} />
             ))}
